@@ -202,13 +202,13 @@ class LoggingDB(object):
         """Search for parameter names. Wildcard is '%'."""
         types = self._VariableDataType.ALL
         vl = self._md.getVariablesOfDataTypeWithNameLikePattern(pattern, types)
-        return [vv.getVariableName() for vv in vl]
+        return [str(vv) for vv in vl]
 
     def getDescription(self, pattern):
         """Get Variable Description from pattern. Wildcard is '%'."""
         return dict(
             [
-                (vv.getVariableName(), vv.getDescription())
+                (str(vv), vv.getDescription())
                 for vv in self.getVariableSet(pattern)
             ]
         )
@@ -217,7 +217,7 @@ class LoggingDB(object):
         """Get Variable Unit from pattern. Wildcard is '%'."""
         return dict(
             [
-                (vv.getVariableName(), vv.getUnit())
+                (str(vv), vv.getUnit())
                 for vv in self.getVariableSet(pattern)
             ]
         )
@@ -234,7 +234,7 @@ class LoggingDB(object):
         else:
             logfuns = []
             for f in fundamentals:
-                logfuns.append(f.toString())
+                logfuns.append(str(f))
             self._log.info(
                 "List of fundamentals found: {0}".format(", ".join(logfuns))
             )
@@ -462,7 +462,7 @@ class LoggingDB(object):
         else:
             logvars = []
             for v in variables:
-                v = v.toString()
+                v = str(v)
                 if v == master_name:
                     logvars.append("{0} (master)".format(v))
                 else:
@@ -495,7 +495,7 @@ class LoggingDB(object):
 
         # Acquire aligned data based on master dataset timestamps
         for v in variables:
-            v = v.toString()
+            v = str(v)
             if v == master_name:
                 continue
             jvar = variables.getVariable(v)
@@ -538,7 +538,7 @@ class LoggingDB(object):
         else:
             logvars = []
             for v in variables:
-                logvars.append(v.toString())
+                logvars.append(str(v))
             self._log.info(
                 "List of variables to be queried: {0}".format(
                     ", ".join(logvars)
@@ -615,7 +615,7 @@ class LoggingDB(object):
         else:
             logvars = []
             for v in variables:
-                logvars.append(v.toString())
+                logvars.append(str(v))
             self._log.info(
                 "List of variables to be queried: {0}".format(
                     ", ".join(logvars)
@@ -636,7 +636,7 @@ class LoggingDB(object):
 
         # Acquire
         for v in variables:
-            v = v.toString()
+            v = str(v)
             jvar = variables.getVariable(v)
             if t2 is None or t2 == "last":
                 res = [
@@ -726,7 +726,7 @@ class LoggingDB(object):
         else:
             logvars = []
             for v in variables:
-                logvars.append(v.toString())
+                logvars.append(str(v))
             self._log.info(
                 "List of variables to be queried: {0}".format(
                     ", ".join(logvars)
@@ -735,7 +735,7 @@ class LoggingDB(object):
 
         # Acquire
         for v in variables:
-            v = v.toString()
+            v = str(v)
             jvar = variables.getVariable(v)
             try:
                 res = self._ts.getDataInFixedIntervals(
